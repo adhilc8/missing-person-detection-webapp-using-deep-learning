@@ -1,0 +1,13 @@
+# Python 3.10 compatible dependencies for the Flask app and face pipeline.
+Flask>=2.3,<4
+keras-facenet==0.3.2
+mediapipe==0.10.11
+mtcnn==0.1.1
+numpy==1.23.5
+requests>=2.31,<3
+tensorflow==2.12.1
+
+# Keep MediaPipe's OpenCV and JAX dependencies compatible with this stack.
+opencv-contrib-python==4.11.0.86
+jax==0.4.30
+jaxlib==0.4.30
