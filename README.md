@@ -11,7 +11,7 @@ PersonTrack AI is a Flask web application for registering missing-person reports
 
 ## Configuration
 
-Set `FLASK_SECRET_KEY` before deployment. Email alerts require `SMTP_SENDER` and `SMTP_APP_PASSWORD`; without them, email alerts are disabled. Do not commit credentials, databases, or uploaded/detected images.
+Set `FLASK_SECRET_KEY` before deployment. Email alerts use `adhilc8848@gmail.com` by default; set `SMTP_SENDER` to override it and provide `SMTP_APP_PASSWORD` to enable sending. Do not commit credentials, databases, or uploaded/detected images.
 
 Run the Flask app from the `webapp` directory after installing its Python dependencies:
 

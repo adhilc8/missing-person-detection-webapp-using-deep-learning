@@ -274,7 +274,7 @@ if __name__ == "__main__":
                 update_current_status(username, status)
 
 ########################################################### Send email ##############################################
-                sender = os.environ.get("SMTP_SENDER")
+                sender = os.environ.get("SMTP_SENDER", "adhilc8848@gmail.com")
                 receiver = email
                 password = os.environ.get("SMTP_APP_PASSWORD")
                 image_path = save_path
