@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg,#69abed, #feb47b);
+            overflow: auto;
+        }
+        .outer-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 30px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        .container {
+            text-align: center;
+            flex: 1;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 50vh;
+        }
+        .image-panel {
+            width: 280px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .image-panel h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.2rem;
+        }
+        .image-panel img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+        }
+        .no-image {
+            color: #999;
+            font-size: 1rem;
+            font-style: italic;
+        }
+        .title {
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .sub-title {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .button {
+            padding: 14px 20px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #e2574e;
+            transform: scale(1.05);
+        }
+        .image-preview {
+            margin-top: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="outer-container">
+
+        <!-- Left: Profile Info -->
+        <div class="container">
+            <div class="title">Profile : {{user}}</div>
+            <br>
+            <div class="sub-title">Name: {{user}}</div>
+            <div class="sub-title">Searching for: {{missing_person_name}}</div>
+            <div class="sub-title">Relation: {{relation}}</div>
+            <div class="sub-title">Missing Since: {{date_since}}</div>
+            <div class="sub-title">Contact: {{contact}}</div>
+            <div class="sub-title">Email: {{email}}</div>
+            <div class="sub-title">Address: {{address}}</div>
+            <div class="sub-title">Date Uploaded: {{date}}</div>
+            <div class="sub-title">Current Status: {{status}}</div>
+
+            <div class="button-container">
+                <a href="{{ url_for('home2') }}" class="button">Home</a>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;"
+                    onchange="previewImage(event)">
+                <button class="button" onclick="document.getElementById('imageInput').click()">
+                    Open Image
+                </button>
+            </div>
+
+            <!-- Image preview area with Upload button -->
+            <div class="image-preview" id="imagePreview">
+                <img id="previewImg" src="" alt="Selected Image">
+                <form id="uploadForm" action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="image" id="hiddenFileInput" style="display:none;">
+                    <button type="button" class="button" onclick="submitUpload()">Upload</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right: Stored Image Panel -->
+        <div class="image-panel">
+            <h3>📷 Missing Person Photo</h3>
+            {% if image_name %}
+    <img src="{{ url_for('static', filename='uploads/' + image_name) }}" alt="Missing Person Image">
+{% else %}
+    <p class="no-image">No image uploaded yet.</p>
+{% endif %}
+        </div>
+
+
+
+<div class="image-panel">
+            <h3>📷 Result</h3>
+            {% if image_name %}
+    <img src="{{ url_for('static', filename='detections/' + path) }}" alt="Missing Person Image">
+{% else %}
+    <p class="no-image">No image uploaded yet.</p>
+{% endif %}
+
+Status: {{status}}
+        </div>
+
+
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewDiv = document.getElementById('imagePreview');
+                    const previewImg = document.getElementById('previewImg');
+                    previewImg.src = e.target.result;
+                    previewDiv.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitUpload() {
+            const file = document.getElementById('imageInput').files[0];
+            if (!file) {
+                alert('No image selected!');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch("{{ url_for('upload_image') }}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();  // Reload to show the newly uploaded image
+                } else {
+                    alert('Upload failed.');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Upload error: ' + error);
+            });
+        }
+    </script>
+</body>
+</html>

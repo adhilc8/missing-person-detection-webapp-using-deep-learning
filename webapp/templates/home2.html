@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PersonTrack AI</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+   
+    header {
+      background-color: #5C6BC0;
+      color: white;
+      padding: 20px 10px;
+      position: relative;
+      text-align: left;
+    }
+
+    .logo {
+      height: 50px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .header-buttons {
+      position: absolute;
+      top: 20px;
+      right: 10px;
+    }
+
+    .user-profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid white;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .carousel img.active {
+      display: block;
+    }
+
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.5em;
+      margin-bottom: 30px;
+    }
+
+    .hero-content .cta {
+      background-color: #FF7043;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .features h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #5C6BC0;
+    }
+
+    .features .feature-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .features .feature-item {
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      width: 250px;
+      text-align: left;
+    }
+
+    .features .feature-item h3 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #5C6BC0;
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #263238;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #FF7043;
+      margin: 0 10px;
+    }
+
+
+    .profile-popup {
+      display: none;
+      position: absolute;
+      top: 17px;
+      right: 30px;
+      background: white;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .profile-popup p {
+      margin: 10px 0;
+      color: #333;
+    }
+
+
+
+
+
+.logout-btn {
+  background-color: #FF7043; 
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  border-radius: 10px; 
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #FF5722;
+}
+
+.logout-btn:focus {
+  outline: none;
+}
+  </style>
+</head>
+<body>
+ 
+
+ 
+
+
+
+
+ <header>
+    <img src="../static/images/logo.jpg" alt="Platform Logo" class="logo">
+    <h1>PersonTrack AI - an AI-based Missing Person Detection</h1>
+
+  <div class="header-buttons">
+      <img src="../static/images/user.png" alt="User Profile" class="user-profile" onclick="toggleProfilePopup()">
+      <div id="profilePopup" class="profile-popup">
+
+<form action="{{ url_for('profile') }}">
+	<button class="logout-btn">👤 Profile: {{user}} </button>
+
+</form>
+
+</br>
+<form action="{{ url_for('landing') }}">
+        <button class="logout-btn" >Logout</button>
+</form>
+      </div>
+    </div>
+
+  </div>
+  </header>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="carousel">
+      <img src="https://plus.unsplash.com/premium_photo-1749912106892-82f0cd28ece3?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHx8" class="active" alt="Slide 1">
+      <img src="https://www.crownsecuretech.com/wp-content/uploads/2024/01/the-advancements-in-4k-and-hd-surveillance-cameras.jpg" alt="Slide 2">
+      <img src="https://www.crownsecuretech.com/wp-content/uploads/2024/01/the-advancements-in-4k-and-hd-surveillance-cameras.jpg" alt="Slide 3">
+    </div>
+    <div class="hero-content">
+      <h1>PersonTrack AI</h1>
+
+      <p>An AI-powered platform for missing person detection using advanced computer vision.
+Upload images, analyze video feeds, and match identities in real time.</p>
+      <a href="{{ url_for('profile') }}" class="cta">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Key Features</h2>
+    <div class="feature-list">
+      <div class="feature-item">
+        <h3>AI-based Face Matching</h3>
+        <p>Deep learning models automatically extract facial embeddings and match them against the missing-person database. This enables fast and accurate identification even from low-quality or partial images.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Image & Video Analysis</h3>
+        <p>The system can analyze uploaded images, CCTV footage, and live camera streams. It detects and tracks persons across different cameras and environments.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Real-time Alerts and Match Notifications</h3>
+        <p>Instant alerts are generated when a high-confidence match is detected. This significantly reduces response time during active search operations.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Secure User Authentication</h3>
+        <p>Authorized users can log in securely with role-based permissions for police, administrators, and operators. This ensures that sensitive case data is accessed only by approved personnel.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Deep CNN-based Face Representation Learning</h3>
+        <p>The system uses deep convolutional neural networks to learn discriminative facial embeddings. These embeddings enable robust matching across pose, illumination, age variation, and occlusions.</p>
+      </div>
+      <div class="feature-item">
+        <h3>End-to-End AI Inference</h3>
+        <p>These technical points align very well with your existing expertise in CNN-based imaging and MediaPipe-based real-time systems, so they will look credible and consistent across your portfolio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 AI-based Missing Person Detection. All rights reserved.</p>
+    <a href="#">Terms of Use</a>
+    <a href="#">Privacy Policy</a>
+  </footer>
+
+  <script>
+    // Slideshow Functionality
+    const slides = document.querySelectorAll('.carousel img');
+    let currentIndex = 0;
+
+    setInterval(() => {
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add('active');
+    }, 3000); // Change slide every 3 seconds
+
+
+
+
+
+    function toggleProfilePopup() {
+      var popup = document.getElementById("profilePopup");
+      popup.style.display = (popup.style.display === "block") ? "none" : "block";
+    }
+
+
+
+    
+    document.addEventListener("click", function(event) {
+      var popup = document.getElementById("profilePopup");
+      var profileImg = document.querySelector(".user-profile");
+
+      if (!popup.contains(event.target) && event.target !== profileImg) {
+        popup.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
+
