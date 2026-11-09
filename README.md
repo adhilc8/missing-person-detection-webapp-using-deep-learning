@@ -1,11 +1,11 @@
-# Missing Person Detection Webapp using Deep Learning
+# ai-powered real time system for missing person Identification & alert
 
 PersonTrack AI is a Flask web application for registering missing-person reports and matching uploaded photos against a face-recognition pipeline. The project includes the web app, presentation, and system architecture diagrams.
 
 ## Project files
 
 - `webapp/` — Flask application, HTML templates, and static assets
-- `Missing Person Detection Webapp using Deep Learning.pptx` — project presentation
+- `ai-powered real time system for missing person Identification & alert.pptx` — project presentation
 - `Face Recognition Pipeline.drawio` and `.png` — recognition pipeline diagram
 - `System Architecture.drawio` and `.png` — system architecture diagram
 
@@ -19,3 +19,4 @@ Run the Flask app from the `webapp` directory after installing its Python depend
 cd webapp
 python app.py
 ```
+
